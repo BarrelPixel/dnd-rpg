@@ -7,90 +7,14 @@ from utils import (
     roll_ability_score, calculate_modifier, print_choice_menu, 
     print_character_sheet, console, Prompt
 )
+from data_loader import data_loader
+from config import config
 
-# D&D 3.5e Races
-RACES = {
-    "Human": {
-        "description": "Versatile and adaptable",
-        "ability_bonuses": {"all": 1},
-        "traits": ["Bonus feat", "Extra skill points"]
-    },
-    "Elf": {
-        "description": "Graceful and magical",
-        "ability_bonuses": {"dexterity": 2, "constitution": -2},
-        "traits": ["Low-light vision", "Elven weapon familiarity", "Immunity to sleep"]
-    },
-    "Dwarf": {
-        "description": "Sturdy and determined",
-        "ability_bonuses": {"constitution": 2, "charisma": -2},
-        "traits": ["Darkvision", "Stonecunning", "Stability"]
-    },
-    "Halfling": {
-        "description": "Small and nimble",
-        "ability_bonuses": {"dexterity": 2, "strength": -2},
-        "traits": ["Small size", "Fearless", "Lucky"]
-    }
-}
+# Get race and class data from data loader
+RACES = data_loader.races
+CLASSES = data_loader.classes
 
-# D&D 3.5e Classes
-CLASSES = {
-    "Fighter": {
-        "description": "Master of martial combat",
-        "hit_die": 10,
-        "base_attack_bonus": "Good",
-        "saves": {"fortitude": "Good", "reflex": "Poor", "will": "Poor"},
-        "skills_per_level": 2,
-        "class_features": ["Bonus feats", "Weapon specialization"]
-    },
-    "Wizard": {
-        "description": "Master of arcane magic",
-        "hit_die": 4,
-        "base_attack_bonus": "Poor",
-        "saves": {"fortitude": "Poor", "reflex": "Poor", "will": "Good"},
-        "skills_per_level": 2,
-        "class_features": ["Spellcasting", "Arcane bond", "School specialization"]
-    },
-    "Cleric": {
-        "description": "Divine spellcaster and healer",
-        "hit_die": 8,
-        "base_attack_bonus": "Average",
-        "saves": {"fortitude": "Good", "reflex": "Poor", "will": "Good"},
-        "skills_per_level": 2,
-        "class_features": ["Spellcasting", "Turn undead", "Domain powers"]
-    },
-    "Rogue": {
-        "description": "Skilled and stealthy",
-        "hit_die": 6,
-        "base_attack_bonus": "Average",
-        "saves": {"fortitude": "Poor", "reflex": "Good", "will": "Poor"},
-        "skills_per_level": 8,
-        "class_features": ["Sneak attack", "Trapfinding", "Evasion"]
-    }
-}
 
-# Starting equipment by class
-STARTING_EQUIPMENT = {
-    "Fighter": {
-        "weapons": ["Longsword", "Shortbow"],
-        "armor": "Chain shirt",
-        "gear": ["Backpack", "Bedroll", "Rations (5 days)", "Waterskin", "50 ft rope"]
-    },
-    "Wizard": {
-        "weapons": ["Quarterstaff"],
-        "armor": "None",
-        "gear": ["Spellbook", "Component pouch", "Backpack", "Bedroll", "Rations (5 days)", "Waterskin"]
-    },
-    "Cleric": {
-        "weapons": ["Mace", "Crossbow, light"],
-        "armor": "Scale mail",
-        "gear": ["Holy symbol", "Backpack", "Bedroll", "Rations (5 days)", "Waterskin"]
-    },
-    "Rogue": {
-        "weapons": ["Short sword", "Shortbow"],
-        "armor": "Leather armor",
-        "gear": ["Thieves' tools", "Backpack", "Bedroll", "Rations (5 days)", "Waterskin", "50 ft rope"]
-    }
-}
 
 def create_character() -> Dict[str, Any]:
     """Create a new D&D 3.5e character"""
@@ -147,11 +71,12 @@ def create_character() -> Dict[str, Any]:
         console.print(f"{ability.title()}: {score} ({modifier_str})")
     
     # Calculate derived stats
-    class_data = CLASSES[character_class]
+    class_data = data_loader.get_class(character_class)
     
     # Hit Points
     con_modifier = calculate_modifier(abilities['constitution'])
-    max_hp = class_data['hit_die'] + con_modifier
+    hit_die = int(class_data['hit_die'].replace('d', ''))
+    max_hp = hit_die + con_modifier
     max_hp = max(1, max_hp)  # Minimum 1 HP
     
     # Armor Class
@@ -198,17 +123,21 @@ def create_character() -> Dict[str, Any]:
 
 def get_starting_equipment(character_class: str) -> Dict[str, Any]:
     """Get starting equipment for a character class"""
-    equipment = STARTING_EQUIPMENT.get(character_class, {})
+    class_data = data_loader.get_class(character_class)
+    if not class_data:
+        return {}
+    
+    equipment = class_data.get('starting_equipment', {})
     
     # Convert to inventory format
     inventory = {}
     for weapon in equipment.get('weapons', []):
         inventory[weapon] = 1
     
-    if equipment.get('armor'):
-        inventory[equipment['armor']] = 1
+    for armor in equipment.get('armor', []):
+        inventory[armor] = 1
     
-    for item in equipment.get('gear', []):
+    for item in equipment.get('items', []):
         inventory[item] = 1
     
     return inventory
@@ -218,17 +147,19 @@ def level_up_character(character: Dict[str, Any]) -> Dict[str, Any]:
     character['level'] += 1
     
     # Increase hit points
-    class_data = CLASSES[character['class']]
-    con_modifier = calculate_modifier(character['abilities']['constitution'])
-    hp_gain = random.randint(1, class_data['hit_die']) + con_modifier
-    hp_gain = max(1, hp_gain)  # Minimum 1 HP gain
-    
-    character['max_hp'] += hp_gain
-    character['current_hp'] += hp_gain
-    
-    console.print(f"\n[bold green]Level Up![/bold green]")
-    console.print(f"[green]You are now level {character['level']}![/green]")
-    console.print(f"[green]Gained {hp_gain} hit points![/green]")
+    class_data = data_loader.get_class(character['class'])
+    if class_data:
+        hit_die = int(class_data['hit_die'].replace('d', ''))
+        con_modifier = calculate_modifier(character['abilities']['constitution'])
+        hp_gain = random.randint(1, hit_die) + con_modifier
+        hp_gain = max(1, hp_gain)  # Minimum 1 HP gain
+        
+        character['max_hp'] += hp_gain
+        character['current_hp'] += hp_gain
+        
+        console.print(f"\n[bold green]Level Up![/bold green]")
+        console.print(f"[green]You are now level {character['level']}![/green]")
+        console.print(f"[green]Gained {hp_gain} hit points![/green]")
     
     return character
 

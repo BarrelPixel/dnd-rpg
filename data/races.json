@@ -1,0 +1,78 @@
+{
+  "Human": {
+    "name": "Human",
+    "description": "Humans are the most adaptable and ambitious people among the common races.",
+    "ability_bonuses": {
+      "strength": 0,
+      "dexterity": 0,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "traits": [
+      "Bonus feat at 1st level",
+      "4 extra skill points at 1st level",
+      "1 extra skill point per level"
+    ],
+    "favored_class": "Any"
+  },
+  "Elf": {
+    "name": "Elf",
+    "description": "Elves are a magical people of otherworldly grace, living in the world but not entirely part of it.",
+    "ability_bonuses": {
+      "strength": 0,
+      "dexterity": 2,
+      "constitution": -2,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "traits": [
+      "Low-light vision",
+      "Immunity to magic sleep effects",
+      "+2 racial bonus on saves against enchantment spells",
+      "+2 racial bonus on Listen, Search, and Spot checks"
+    ],
+    "favored_class": "Wizard"
+  },
+  "Dwarf": {
+    "name": "Dwarf",
+    "description": "Dwarves are known for their skill in warfare, their ability to withstand physical and magical punishment, their hard work, and their capacity for drinking ale.",
+    "ability_bonuses": {
+      "strength": 0,
+      "dexterity": 0,
+      "constitution": 2,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": -2
+    },
+    "traits": [
+      "Darkvision 60 feet",
+      "Stonecunning",
+      "+2 racial bonus on saves against poison",
+      "+2 racial bonus on saves against spells and spell-like effects",
+      "+1 racial bonus on attack rolls against orcs and goblinoids"
+    ],
+    "favored_class": "Fighter"
+  },
+  "Halfling": {
+    "name": "Halfling",
+    "description": "Halflings are clever, capable, and resourceful survivors.",
+    "ability_bonuses": {
+      "strength": -2,
+      "dexterity": 2,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "traits": [
+      "+2 racial bonus on Climb, Jump, Listen, and Move Silently checks",
+      "+1 racial bonus on all saving throws",
+      "+2 morale bonus on saving throws against fear",
+      "+1 racial bonus on attack rolls with thrown weapons and slings"
+    ],
+    "favored_class": "Rogue"
+  }
+} 

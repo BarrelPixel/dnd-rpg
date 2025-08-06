@@ -8,59 +8,11 @@ from utils import (
     console, print_choice_menu, Prompt
 )
 from character import get_attack_bonus, get_damage_bonus, damage_character, is_character_alive
-from spells import SPELLS
+from data_loader import data_loader
+from config import config
 
-# Monster definitions
-MONSTERS = {
-    "Goblin": {
-        "name": "Goblin",
-        "level": 1,
-        "max_hp": 6,
-        "armor_class": 15,
-        "initiative_bonus": 1,
-        "attack_bonus": 1,
-        "damage": "1d4",
-        "damage_bonus": 0,
-        "xp_value": 65,
-        "description": "A small, green-skinned creature with sharp teeth"
-    },
-    "Orc": {
-        "name": "Orc",
-        "level": 2,
-        "max_hp": 12,
-        "armor_class": 14,
-        "initiative_bonus": 0,
-        "attack_bonus": 3,
-        "damage": "1d8",
-        "damage_bonus": 2,
-        "xp_value": 200,
-        "description": "A muscular humanoid with tusks and greenish skin"
-    },
-    "Skeleton": {
-        "name": "Skeleton",
-        "level": 1,
-        "max_hp": 8,
-        "armor_class": 13,
-        "initiative_bonus": 2,
-        "attack_bonus": 1,
-        "damage": "1d6",
-        "damage_bonus": 0,
-        "xp_value": 100,
-        "description": "An animated skeleton wielding a rusty sword"
-    },
-    "Zombie": {
-        "name": "Zombie",
-        "level": 1,
-        "max_hp": 10,
-        "armor_class": 11,
-        "initiative_bonus": -1,
-        "attack_bonus": 1,
-        "damage": "1d6",
-        "damage_bonus": 1,
-        "xp_value": 100,
-        "description": "A shambling undead creature"
-    }
-}
+# Get monster data from data loader
+MONSTERS = data_loader.monsters
 
 def create_monster(monster_type: str) -> Dict[str, Any]:
     """Create a monster of the specified type"""
@@ -308,19 +260,26 @@ def start_combat(character: Dict[str, Any], enemies: List[Dict[str, Any]]) -> Di
 
 def create_random_encounter(character_level: int) -> List[Dict[str, Any]]:
     """Create a random encounter appropriate for the character's level"""
-    # Simple encounter generation based on level
+    # Get monsters appropriate for character level
+    available_monsters = []
+    for monster_name, monster_data in MONSTERS.items():
+        if monster_data.get('level', 1) <= character_level + 1:
+            available_monsters.append(monster_name)
+    
+    if not available_monsters:
+        available_monsters = list(MONSTERS.keys())
+    
+    # Determine number of enemies based on character level
     if character_level <= 2:
-        monster_types = ["Goblin", "Skeleton", "Zombie"]
-        num_monsters = random.randint(1, 2)
+        num_enemies = random.randint(1, 2)
     else:
-        monster_types = ["Orc", "Skeleton", "Zombie"]
-        num_monsters = random.randint(1, 3)
+        num_enemies = random.randint(1, 3)
     
     enemies = []
-    for _ in range(num_monsters):
-        monster_type = random.choice(monster_types)
-        monster = create_monster(monster_type)
-        enemies.append(monster)
+    for _ in range(num_enemies):
+        monster_type = random.choice(available_monsters)
+        enemy = create_monster(monster_type)
+        enemies.append(enemy)
     
     return enemies
 
