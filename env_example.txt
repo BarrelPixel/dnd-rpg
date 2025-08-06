@@ -1,0 +1,6 @@
+# D&D 3.5e RPG Environment Configuration
+# Copy this content to a file named .env and add your OpenAI API key
+
+# OpenAI API Key (optional - for AI Dungeon Master narration)
+# Get your API key from: https://platform.openai.com/api-keys
+OPENAI_API_KEY=your_openai_api_key_here 
