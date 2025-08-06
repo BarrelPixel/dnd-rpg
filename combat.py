@@ -10,6 +10,7 @@ from utils import (
 from character import get_attack_bonus, get_damage_bonus, damage_character, is_character_alive
 from data_loader import data_loader
 from config import config
+from spells import SPELLS
 
 # Get monster data from data loader
 MONSTERS = data_loader.monsters
