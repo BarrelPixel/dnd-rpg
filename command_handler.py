@@ -25,6 +25,7 @@ class CommandHandler:
             'map': self._handle_map,
             'save': self._handle_save,
             'stats': self._handle_stats,
+            'theme': self._handle_theme,
             'help': self._handle_help,
             'quit': self._handle_quit,
             'exit': self._handle_quit
@@ -145,6 +146,30 @@ class CommandHandler:
         self.game_state.display_game_stats()
         return True
     
+    def _handle_theme(self, character: Character, dungeon, args) -> bool:
+        """Handle 'theme' command"""
+        try:
+            from enhanced_ui import enhanced_ui
+            
+            if not args:
+                # Show current theme
+                console.print(f"[cyan]Current theme: {enhanced_ui.theme}[/cyan]")
+                console.print("[yellow]Available themes: classic, dark, fantasy, combat[/yellow]")
+                console.print("[yellow]Usage: theme [theme_name][/yellow]")
+                return True
+            
+            theme_name = args[0].lower()
+            enhanced_ui.set_theme(theme_name)
+            console.print(f"[green]Theme changed to: {theme_name}[/green]")
+            
+            # Show a preview
+            enhanced_ui.display_progress_bars(character.to_dict())
+            
+        except ImportError:
+            console.print("[yellow]Enhanced UI not available. Using default theme.[/yellow]")
+        
+        return True
+    
     def _handle_help(self, character: Character, dungeon, args) -> bool:
         """Handle 'help' command"""
         self._show_help()
@@ -181,6 +206,7 @@ class CommandHandler:
         console.print("- map: Show dungeon map")
         console.print("- save: Save your game")
         console.print("- stats: Show game statistics")
+        console.print("- theme: Change UI theme (classic, dark, fantasy, combat)")
         console.print("- help: Show this help")
         console.print("- quit: Exit the game")
         

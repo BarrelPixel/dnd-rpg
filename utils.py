@@ -81,7 +81,16 @@ def print_choice_menu(options: List[str], title: str = "Choose an option:") -> i
             console.print("[red]Please enter a valid number.[/red]")
 
 def print_character_sheet(character: Dict[str, Any]):
-    """Display a formatted character sheet"""
+    """Display a formatted character sheet using enhanced UI"""
+    try:
+        from enhanced_ui import enhanced_ui
+        enhanced_ui.display_enhanced_character_sheet(character)
+    except ImportError:
+        # Fallback to simple table
+        _print_simple_character_sheet(character)
+
+def _print_simple_character_sheet(character: Dict[str, Any]):
+    """Fallback simple character sheet display"""
     table = Table(title=f"Character Sheet - {character['name']}")
     
     table.add_column("Attribute", style="cyan")
@@ -108,7 +117,32 @@ def print_character_sheet(character: Dict[str, Any]):
     console.print(table)
 
 def print_combat_status(combatants: List[Dict[str, Any]]):
-    """Display current combat status"""
+    """Display current combat status using enhanced UI"""
+    try:
+        from enhanced_ui import enhanced_ui
+        
+        # Separate character and enemies
+        character = None
+        enemies = []
+        
+        for combatant in combatants:
+            if 'class' in combatant:  # This is the player character
+                character = combatant
+            else:  # This is an enemy
+                enemies.append(combatant)
+        
+        if character:
+            # Use enhanced UI for better display
+            enhanced_ui.display_enhanced_combat(character, enemies, 1)  # Round number will be updated by caller
+        else:
+            # Fallback to simple table
+            _print_simple_combat_status(combatants)
+    except ImportError:
+        # Fallback if enhanced UI is not available
+        _print_simple_combat_status(combatants)
+
+def _print_simple_combat_status(combatants: List[Dict[str, Any]]):
+    """Fallback simple combat status display"""
     table = Table(title="Combat Status")
     
     table.add_column("Name", style="cyan")
