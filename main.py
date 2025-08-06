@@ -20,6 +20,8 @@ from combat import start_combat, create_monster
 from dungeon import create_dungeon, explore_room
 from dungeon_master import DungeonMaster
 from game_state import GameState
+from models import Character
+from command_handler import CommandHandler
 
 class DnDRPG:
     """Main game class that orchestrates all components"""
@@ -27,6 +29,7 @@ class DnDRPG:
     def __init__(self):
         self.game_state = GameState()
         self.dm = DungeonMaster()
+        self.command_handler = CommandHandler(self.game_state, self.dm)
         self.running = True
     
     def run(self):
@@ -138,16 +141,19 @@ class DnDRPG:
     
     def play_game(self):
         """Main game play loop"""
-        character = self.game_state.get_character()
+        character_data = self.game_state.get_character()
         dungeon = self.game_state.get_dungeon()
         
-        if not character or not dungeon:
+        if not character_data or not dungeon:
             print_error("Game state error. Returning to main menu.")
             self.game_state.reset_game()
             return
         
+        # Convert to Character object
+        character = Character.from_dict(character_data)
+        
         # Check if character is alive
-        if not is_character_alive(character):
+        if not character.is_alive():
             print_error("Your character has been defeated!")
             self.handle_game_over(False)
             return
@@ -168,90 +174,38 @@ class DnDRPG:
             console.print(f"\n[green]Exits: {', '.join(exits)}[/green]")
         
         # Get player command
-        command = Prompt.ask("\nWhat would you like to do?").lower().strip()
+        command = Prompt.ask("\nWhat would you like to do?").strip()
         
-        # Process command
-        self.process_command(command, character, dungeon)
-    
-    def process_command(self, command: str, character: Dict[str, Any], dungeon):
-        """Process player commands"""
-        if command in ['quit', 'exit']:
+        # Process command using command handler
+        should_continue = self.command_handler.execute(command, character, dungeon)
+        if not should_continue:
             self.quit_game()
-        
-        elif command == 'look':
-            current_room = dungeon.get_current_room()
-            console.print(f"\n[cyan]{current_room.description}[/cyan]")
-            
-            # Explore room for encounters/treasure
-            enemies = explore_room(current_room, character)
-            if enemies:
-                self.handle_combat(character, enemies)
-        
-        elif command.startswith('move '):
-            direction = command.split(' ', 1)[1]
-            if direction in ['north', 'south', 'east', 'west']:
-                if dungeon.move(direction):
-                    # Explore new room
-                    current_room = dungeon.get_current_room()
-                    enemies = explore_room(current_room, character)
-                    if enemies:
-                        self.handle_combat(character, enemies)
-            else:
-                print_error("Invalid direction. Use: north, south, east, west")
-        
-        elif command == 'character':
-            print_character_sheet(character)
-        
-        elif command == 'spells':
-            if character['class'] in ['Cleric', 'Wizard']:
-                from spells import display_spell_list
-                display_spell_list(character)
-            else:
-                console.print("[yellow]You are not a spellcaster.[/yellow]")
-        
-        elif command == 'inventory':
-            from utils import print_inventory
-            print_inventory(character['inventory'])
-        
-        elif command == 'map':
-            console.print(dungeon.get_dungeon_map())
-        
-        elif command == 'save':
-            self.game_state.save_game()
-        
-        elif command == 'stats':
-            self.game_state.display_game_stats()
-        
-        elif command == 'help':
-            self.show_help()
-        
-        else:
-            print_error(f"Unknown command: {command}")
-            console.print("Type 'help' for available commands.")
     
-    def handle_combat(self, character: Dict[str, Any], enemies: list):
+
+    
+    def handle_combat(self, character: Character, enemies: list):
         """Handle combat encounters"""
         self.game_state.increment_encounters()
         
         # DM describes combat start
-        self.dm.describe_combat_start(enemies, character)
+        self.dm.describe_combat_start(enemies, character.to_dict())
         
         # Start combat
-        updated_character = start_combat(character, enemies)
+        updated_character = start_combat(character.to_dict(), enemies)
         
         # Update character in game state
         self.game_state.update_character(updated_character)
         
         # Check if character survived
-        if not is_character_alive(updated_character):
+        if not Character.from_dict(updated_character).is_alive():
             self.handle_game_over(False)
     
-    def handle_boss_encounter(self, character: Dict[str, Any], dungeon):
+    def handle_boss_encounter(self, character: Character, dungeon):
         """Handle the final boss encounter"""
         console.print("\n[bold red]BOSS ENCOUNTER![/bold red]")
         
         # DM describes boss encounter
-        self.dm.describe_boss_encounter(character)
+        self.dm.describe_boss_encounter(character.to_dict())
         
         # Create boss monster
         boss = create_monster("Orc")  # Use Orc as boss for now
@@ -268,7 +222,7 @@ class DnDRPG:
         self.handle_combat(character, [boss])
         
         # Check if character defeated boss
-        if is_character_alive(character):
+        if character.is_alive():
             self.handle_game_over(True)
     
     def handle_game_over(self, victory: bool):
