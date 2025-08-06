@@ -8,8 +8,7 @@ from rich.console import Console
 from rich.text import Text
 from rich.panel import Panel
 from rich.table import Table
-from rich.prompt import Prompt, Confirm
-from rich import print as rprint
+from rich.prompt import Prompt
 
 console = Console()
 
@@ -176,9 +175,7 @@ def print_inventory(inventory: Dict[str, int]):
     
     console.print(table)
 
-def clear_screen():
-    """Clear the console screen"""
-    console.clear()
+
 
 def dramatic_pause(seconds: float = 1.0):
     """Add a dramatic pause to the narrative"""

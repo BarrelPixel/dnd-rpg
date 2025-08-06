@@ -2,7 +2,7 @@
 Character creation and management for D&D 3.5e RPG
 """
 import random
-from typing import Dict, Any, List
+from typing import Dict, Any
 from utils import (
     roll_ability_score, calculate_modifier, print_choice_menu, 
     print_character_sheet, console, Prompt
@@ -142,37 +142,7 @@ def get_starting_equipment(character_class: str) -> Dict[str, Any]:
     
     return inventory
 
-def level_up_character(character: Dict[str, Any]) -> Dict[str, Any]:
-    """Level up a character"""
-    character['level'] += 1
-    
-    # Increase hit points
-    class_data = data_loader.get_class(character['class'])
-    if class_data:
-        hit_die = int(class_data['hit_die'].replace('d', ''))
-        con_modifier = calculate_modifier(character['abilities']['constitution'])
-        hp_gain = random.randint(1, hit_die) + con_modifier
-        hp_gain = max(1, hp_gain)  # Minimum 1 HP gain
-        
-        character['max_hp'] += hp_gain
-        character['current_hp'] += hp_gain
-        
-        console.print(f"\n[bold green]Level Up![/bold green]")
-        console.print(f"[green]You are now level {character['level']}![/green]")
-        console.print(f"[green]Gained {hp_gain} hit points![/green]")
-    
-    return character
 
-def heal_character(character: Dict[str, Any], amount: int) -> Dict[str, Any]:
-    """Heal a character by the specified amount"""
-    old_hp = character['current_hp']
-    character['current_hp'] = min(character['max_hp'], character['current_hp'] + amount)
-    healed = character['current_hp'] - old_hp
-    
-    if healed > 0:
-        console.print(f"[green]Healed {healed} hit points![/green]")
-    
-    return character
 
 def damage_character(character: Dict[str, Any], amount: int) -> Dict[str, Any]:
     """Damage a character by the specified amount"""

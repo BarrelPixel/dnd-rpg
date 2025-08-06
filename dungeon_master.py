@@ -3,7 +3,7 @@ AI Dungeon Master for D&D 3.5e RPG
 """
 import os
 import json
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 from openai import OpenAI
 from utils import console, print_narrative, dramatic_pause, print_info
 
@@ -17,7 +17,12 @@ class DungeonMaster:
             console.print("[yellow]Warning: No OpenAI API key found. Using fallback narration.[/yellow]")
             self.client = None
         else:
-            self.client = OpenAI(api_key=api_key)
+            try:
+                # Initialize OpenAI client with minimal parameters to avoid conflicts
+                self.client = OpenAI(api_key=api_key)
+            except Exception as e:
+                console.print(f"[yellow]Warning: Failed to initialize OpenAI client: {e}. Using fallback narration.[/yellow]")
+                self.client = None
         
         self.adventure_context = {
             "theme": "dark fantasy",

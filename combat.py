@@ -11,7 +11,6 @@ from character import get_attack_bonus, get_damage_bonus, damage_character, is_c
 from data_loader import data_loader
 from config import config
 from spells import SPELLS
-from enhanced_ui import enhanced_ui
 
 # Get monster data from data loader
 MONSTERS = data_loader.monsters

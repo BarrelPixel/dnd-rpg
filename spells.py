@@ -195,21 +195,4 @@ def select_spell_to_cast(character: Dict[str, Any]) -> Optional[str]:
     selected_spell = spell_choices[choice_index].split(" (Level")[0]
     return selected_spell
 
-def get_spell_info(spell_name: str) -> str:
-    """Get detailed information about a spell"""
-    if spell_name not in SPELLS:
-        return f"Unknown spell: {spell_name}"
-    
-    spell = SPELLS[spell_name]
-    info = f"[bold]{spell_name}[/bold]\n"
-    info += f"Level: {spell['level']}\n"
-    info += f"School: {spell['school']}\n"
-    info += f"Casting Time: {spell['casting_time']}\n"
-    info += f"Range: {spell['range']}\n"
-    info += f"Target: {spell['target']}\n"
-    info += f"Duration: {spell['duration']}\n"
-    info += f"Saving Throw: {spell['saving_throw']}\n"
-    info += f"Spell Resistance: {spell['spell_resistance']}\n"
-    info += f"Description: {spell['description']}"
-    
-    return info 
+ 

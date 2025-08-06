@@ -2,7 +2,7 @@
 Dungeon generation and navigation for D&D 3.5e RPG
 """
 import random
-from typing import Dict, Any, List, Tuple, Optional
+from typing import Dict, Any, List, Optional
 from utils import print_narrative, dramatic_pause, console
 
 # Room types and their descriptions

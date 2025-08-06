@@ -3,7 +3,7 @@ Configuration management for D&D 3.5e RPG
 """
 import json
 import os
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 from pathlib import Path
 
 class GameConfig:
@@ -102,29 +102,7 @@ class GameConfig:
         """Reload configuration from files"""
         self.config = self._load_config()
     
-    def get_game_setting(self, key: str, default: Any = None) -> Any:
-        """Get a game setting"""
-        return self.get("game", key, default)
-    
-    def get_character_setting(self, key: str, default: Any = None) -> Any:
-        """Get a character setting"""
-        return self.get("character", key, default)
-    
-    def get_combat_setting(self, key: str, default: Any = None) -> Any:
-        """Get a combat setting"""
-        return self.get("combat", key, default)
-    
-    def get_dungeon_setting(self, key: str, default: Any = None) -> Any:
-        """Get a dungeon setting"""
-        return self.get("dungeon", key, default)
-    
-    def get_ai_setting(self, key: str, default: Any = None) -> Any:
-        """Get an AI setting"""
-        return self.get("ai", key, default)
-    
-    def get_ui_setting(self, key: str, default: Any = None) -> Any:
-        """Get a UI setting"""
-        return self.get("ui", key, default)
+
 
 # Global configuration instance
 config = GameConfig() 

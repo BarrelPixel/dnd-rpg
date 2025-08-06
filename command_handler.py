@@ -1,7 +1,7 @@
 """
 Command handler for D&D 3.5e RPG
 """
-from typing import Dict, Any, Callable, Optional, List
+from typing import Dict, Any, Callable, List
 from utils import console, print_error, print_character_sheet, print_inventory
 from models import Character
 from spells import display_spell_list

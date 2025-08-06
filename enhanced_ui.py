@@ -5,13 +5,8 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.layout import Layout
-from rich.columns import Columns
-from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TaskProgressColumn
-from rich.live import Live
-from rich.text import Text
 from rich.box import ROUNDED, DOUBLE, HEAVY
-from rich.align import Align
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 from utils import console
 
 class EnhancedUI:

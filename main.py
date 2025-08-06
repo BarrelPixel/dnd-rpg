@@ -4,7 +4,7 @@ Main game file for D&D 3.5e Text-Based RPG
 import os
 import sys
 from dotenv import load_dotenv
-from typing import Dict, Any
+
 
 # Load environment variables
 load_dotenv()
