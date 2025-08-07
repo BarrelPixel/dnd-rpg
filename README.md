@@ -1,6 +1,6 @@
-# D&D RPG
+# D&D 3.5e RPG
 
-A simple text-based D&D RPG game implemented in Python.
+A simple text-based D&D 3.5e RPG game implemented in Python.
 
 ## Features
 - Character creation with races and classes
@@ -10,7 +10,7 @@ A simple text-based D&D RPG game implemented in Python.
 
 ## Project Structure
 ```
-dnd-rpg/
+dnd35-rpg/
 ├── main.py         # Main game loop and entry point
 ├── models.py       # Data models and structures
 ├── utils.py        # Utility functions
