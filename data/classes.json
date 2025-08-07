@@ -1,164 +1,17 @@
 {
-  "Fighter": {
-    "name": "Fighter",
-    "description": "Fighters are the masters of martial combat, skilled with a variety of weapons and armor.",
-    "hit_die": "d10",
-    "base_attack_bonus": "Good",
-    "saving_throws": {
-      "fortitude": "Good",
-      "reflex": "Poor",
-      "will": "Poor"
+    "Fighter": {
+        "hit_die": "d10",
+        "base_attack": "good",
+        "description": "Masters of martial combat, skilled with a variety of weapons and armor."
     },
-    "class_skills": [
-      "Climb",
-      "Craft",
-      "Handle Animal",
-      "Intimidate",
-      "Jump",
-      "Ride",
-      "Swim"
-    ],
-    "skill_points_per_level": 2,
-    "class_features": [
-      "Bonus Feats",
-      "Weapon and Armor Proficiency"
-    ],
-    "spellcasting": false,
-    "starting_equipment": {
-      "weapons": ["Longsword"],
-      "armor": ["Chain shirt"],
-      "items": ["Backpack", "Bedroll", "Rations (5 days)", "Waterskin"]
-    }
-  },
-  "Wizard": {
-    "name": "Wizard",
-    "description": "Wizards are supreme magic-users, defined and united as a class by the spells they cast.",
-    "hit_die": "d4",
-    "base_attack_bonus": "Poor",
-    "saving_throws": {
-      "fortitude": "Poor",
-      "reflex": "Poor",
-      "will": "Good"
+    "Wizard": {
+        "hit_die": "d4",
+        "base_attack": "poor",
+        "description": "Masters of arcane magic, capable of casting powerful spells."
     },
-    "class_skills": [
-      "Concentration",
-      "Craft",
-      "Decipher Script",
-      "Knowledge (Arcana)",
-      "Knowledge (Architecture)",
-      "Knowledge (Dungeoneering)",
-      "Knowledge (Geography)",
-      "Knowledge (History)",
-      "Knowledge (Local)",
-      "Knowledge (Nature)",
-      "Knowledge (Nobility)",
-      "Knowledge (Religion)",
-      "Knowledge (The Planes)",
-      "Profession",
-      "Spellcraft"
-    ],
-    "skill_points_per_level": 2,
-    "class_features": [
-      "Arcane Spellcasting",
-      "Bonus Feats",
-      "Scribe Scroll"
-    ],
-    "spellcasting": true,
-    "spellcasting_type": "arcane",
-    "starting_equipment": {
-      "weapons": ["Quarterstaff"],
-      "armor": [],
-      "items": ["Spellbook", "Backpack", "Bedroll", "Rations (5 days)", "Waterskin", "Ink", "Inkpen", "Parchment (10 sheets)"]
+    "Cleric": {
+        "hit_die": "d8",
+        "base_attack": "medium",
+        "description": "Divine spellcasters, capable of healing and supporting allies."
     }
-  },
-  "Cleric": {
-    "name": "Cleric",
-    "description": "Clerics are intermediaries between the mortal world and the distant planes of the gods.",
-    "hit_die": "d8",
-    "base_attack_bonus": "Average",
-    "saving_throws": {
-      "fortitude": "Good",
-      "reflex": "Poor",
-      "will": "Good"
-    },
-    "class_skills": [
-      "Concentration",
-      "Craft",
-      "Diplomacy",
-      "Heal",
-      "Knowledge (Arcana)",
-      "Knowledge (History)",
-      "Knowledge (Religion)",
-      "Knowledge (The Planes)",
-      "Profession",
-      "Spellcraft"
-    ],
-    "skill_points_per_level": 2,
-    "class_features": [
-      "Divine Spellcasting",
-      "Turn Undead",
-      "Aura"
-    ],
-    "spellcasting": true,
-    "spellcasting_type": "divine",
-    "starting_equipment": {
-      "weapons": ["Mace"],
-      "armor": ["Chain shirt"],
-      "items": ["Holy symbol", "Backpack", "Bedroll", "Rations (5 days)", "Waterskin"]
-    }
-  },
-  "Rogue": {
-    "name": "Rogue",
-    "description": "Rogues have little in common with each other. While some are stealthy knife fighters who live in the shadows, others are charismatic con artists.",
-    "hit_die": "d6",
-    "base_attack_bonus": "Average",
-    "saving_throws": {
-      "fortitude": "Poor",
-      "reflex": "Good",
-      "will": "Poor"
-    },
-    "class_skills": [
-      "Appraise",
-      "Balance",
-      "Bluff",
-      "Climb",
-      "Craft",
-      "Decipher Script",
-      "Diplomacy",
-      "Disable Device",
-      "Disguise",
-      "Escape Artist",
-      "Forgery",
-      "Gather Information",
-      "Hide",
-      "Intimidate",
-      "Jump",
-      "Knowledge (Local)",
-      "Listen",
-      "Move Silently",
-      "Open Lock",
-      "Perform",
-      "Profession",
-      "Search",
-      "Sense Motive",
-      "Sleight of Hand",
-      "Spot",
-      "Swim",
-      "Tumble",
-      "Use Magic Device",
-      "Use Rope"
-    ],
-    "skill_points_per_level": 8,
-    "class_features": [
-      "Sneak Attack",
-      "Trapfinding",
-      "Evasion"
-    ],
-    "spellcasting": false,
-    "starting_equipment": {
-      "weapons": ["Short sword", "Shortbow"],
-      "armor": ["Leather armor"],
-      "items": ["Backpack", "Bedroll", "Rations (5 days)", "Waterskin", "Thieves' tools"]
-    }
-  }
-} 
+}

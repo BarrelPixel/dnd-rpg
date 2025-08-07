@@ -1,66 +1,39 @@
-# D&D 3.5e Text-Based RPG
+# D&D RPG
 
-A text-based role-playing game based on Dungeons & Dragons 3.5e rules, featuring an AI Dungeon Master that guides you through exciting adventures!
+A simple text-based D&D RPG game implemented in Python.
 
 ## Features
-
-- **Character Creation**: Create and customize your D&D 3.5e character
-- **AI Dungeon Master**: Intelligent AI that narrates and manages your adventure
-- **Combat System**: Turn-based combat with initiative, attacks, and damage calculation
-- **Dungeon Generation**: Procedurally generated dungeons and encounters
-- **Rich Text Interface**: Beautiful console-based UI with colors and formatting
-
-## Setup Instructions
-
-1. **Install Python**: Make sure you have Python 3.8+ installed
-2. **Install Dependencies**: Run `pip install -r requirements.txt`
-3. **Set up OpenAI API**: 
-   - Get an API key from [OpenAI](https://platform.openai.com/)
-   - Create a `.env` file in the project root
-   - Add: `OPENAI_API_KEY=your_api_key_here`
-4. **Run the Game**: Execute `python main.py`
-
-## How to Play
-
-1. Start the game and create your character
-2. The AI Dungeon Master will introduce your adventure
-3. Navigate through the dungeon using text commands
-4. Engage in combat when you encounter enemies
-5. Complete quests and level up your character
-
-## Game Commands
-
-- `look` - Examine your surroundings
-- `move [direction]` - Move in a direction (north, south, east, west)
-- `attack [target]` - Attack an enemy
-- `cast [spell]` - Cast a spell (if you're a spellcaster)
-- `inventory` - Check your inventory
-- `character` - View character sheet
-- `help` - Show available commands
-- `quit` - Exit the game
+- Character creation with races and classes
+- Ability score rolling
+- Basic game state management
+- Expandable game loop
 
 ## Project Structure
-
 ```
 dnd-rpg/
-├── main.py              # Main game entry point
-├── character.py         # Character creation and management
-├── combat.py           # Combat system
-├── dungeon_master.py   # AI Dungeon Master
-├── dungeon.py          # Dungeon generation and navigation
-├── game_state.py       # Game state management
-├── utils.py            # Utility functions
-└── requirements.txt    # Python dependencies
+├── main.py         # Main game loop and entry point
+├── models.py       # Data models and structures
+├── utils.py        # Utility functions
+├── game_state.py   # Game state management
+└── data/           # Game data files
 ```
 
-## Learning Resources
+## Getting Started
 
-This project demonstrates:
-- Object-oriented programming
-- Game state management
-- API integration
-- Text parsing and user input
-- Random number generation
-- File I/O and data persistence
+1. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-Perfect for learning Python programming concepts while having fun with D&D! 
+2. Run the game:
+```bash
+python main.py
+```
+
+## Development
+This is a minimal version of the game with core functionality. You can expand it by:
+- Adding combat system
+- Implementing inventory management
+- Adding spells and abilities
+- Creating a dungeon system
+- Adding save/load functionality

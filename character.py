@@ -5,7 +5,7 @@ import random
 from typing import Dict, Any
 from utils import (
     roll_ability_score, calculate_modifier, print_choice_menu, 
-    print_character_sheet, console, Prompt
+    console, Prompt
 )
 from data_loader import data_loader
 from config import config
@@ -112,7 +112,6 @@ def create_character() -> Dict[str, Any]:
     character['class_features'] = class_data.get('class_features', [])
     
     console.print(f"\n[bold green]Character created successfully![/bold green]")
-    print_character_sheet(character)
     
     # Show spell information for spellcasters
     if character_class in ['Cleric', 'Wizard']:

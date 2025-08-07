@@ -5,39 +5,7 @@ from enhanced_ui import enhanced_ui
 from utils import console, Prompt
 import time
 
-def demo_character_sheet():
-    """Demo enhanced character sheet"""
-    console.print("\n[bold cyan]=== Enhanced Character Sheet ===[/bold cyan]")
-    
-    # Create a sample character
-    character = {
-        'name': 'Erik the Cleric',
-        'race': 'Human',
-        'class': 'Cleric',
-        'level': 3,
-        'abilities': {
-            'strength': 16,
-            'dexterity': 12,
-            'constitution': 14,
-            'intelligence': 10,
-            'wisdom': 18,
-            'charisma': 8
-        },
-        'current_hp': 24,
-        'max_hp': 24,
-        'armor_class': 16,
-        'initiative_bonus': 1,
-        'experience': 3500,
-        'inventory': {
-            'Longsword': 1,
-            'Chain Shirt': 1,
-            'Potion of Healing': 3,
-            'Holy Symbol': 1
-        }
-    }
-    
-    enhanced_ui.display_enhanced_character_sheet(character)
-    Prompt.ask("\nPress Enter to continue")
+# Removed demo_character_sheet function and related calls
 
 def demo_combat_interface():
     """Demo enhanced combat interface"""
@@ -138,7 +106,6 @@ def main():
     # Reset to classic theme
     enhanced_ui.set_theme("classic")
     
-    demo_character_sheet()
     demo_combat_interface()
     demo_progress_bars()
     demo_themes()
